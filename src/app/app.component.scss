@@ -1,0 +1,15 @@
+.steps__container {
+    margin-top: 25px;
+
+    ::ng-deep {
+        .p-field {
+            max-width: 50%;
+        }
+
+        .fields__wrapper {
+            .p-field {
+                max-width: 100%;
+            }   
+        }
+    }
+}
