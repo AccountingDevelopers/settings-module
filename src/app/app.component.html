@@ -3,62 +3,62 @@
     <p-steps [model]="mainSettingsModel" [readonly]="false" [(activeIndex)]="stepActiveIndex"></p-steps>
 
     <div class="steps__container" [ngSwitch]="stepActiveIndex">
-      <ng-container *ngSwitchCase="0">
-        <div class="fields__wrapper">
-          <div class="fields__wrapper--box">
-            <p-divider>
-              <span class="p-badge">Налаштування</span>
-            </p-divider>
+      <ng-container [formGroup]="generalCompanyForm">
+        <ng-container *ngSwitchCase="0">
+          <div class="fields__wrapper">
+            <div class="fields__wrapper--box">
+              <p-divider>
+                <span class="p-badge">Налаштування</span>
+              </p-divider>
 
-            <span formGroupName="name">
-              <span class="p-fluid p-field">
-                <input type="text" pInputText formControlName="short" [placeholder]="'Коротке найменування'" />
+              <span formGroupName="name">
+                <span class="p-fluid p-field">
+                  <input type="text" pInputText formControlName="short" [placeholder]="'Коротке найменування'" />
+                </span>
+
+                <span class="p-fluid p-field">
+                  <input type="text" pInputText formControlName="full" [placeholder]="'Повне найменування'" />
+                </span>
               </span>
 
               <span class="p-fluid p-field">
-                <input type="text" pInputText formControlName="full" [placeholder]="'Повне найменування'" />
+                <input type="text" pInputText formControlName="rnokpp" [placeholder]="'Код'" />
               </span>
-            </span>
 
-            <span class="p-fluid p-field">
-              <input type="text" pInputText formControlName="rnokpp" [placeholder]="'Код'" />
-            </span>
+              <span formGroupName="organization">
+                <span class="p-fluid p-field">
+                  <p-dropdown appendTo="body" formControlName="type" optionValue="value"
+                    [options]="companyOptions.organizationTypes" [placeholder]="'Вид організації'"></p-dropdown>
+                </span>
+              </span>
 
-            <span formGroupName="organization">
               <span class="p-fluid p-field">
-                <p-dropdown appendTo="body" formControlName="type" optionValue="value"
-                  [options]="registerFieldsOptions.organizationTypes" [placeholder]="'Вид організації'"></p-dropdown>
+                <input type="text" pInputText formControlName="edrpou" [placeholder]="'Код за ЄДРПОУ'" />
               </span>
-            </span>
+            </div>
 
-            <span class="p-fluid p-field">
-              <input type="text" pInputText formControlName="edrpou" [placeholder]="'Код за ЄДРПОУ'" />
+            <span class="fields__wrapper--box" formGroupName="signatures">
+              <p-divider>
+                <span class="p-badge">Підписи</span>
+              </p-divider>
+
+              <span class="p-fluid p-field">
+                <p-dropdown appendTo="body" formControlName="head" optionLabel="name.full" optionValue="_id"
+                  [options]="users" [placeholder]="'Керівник'"></p-dropdown>
+              </span>
+
+              <span class="p-fluid p-field">
+                <p-dropdown appendTo="body" formControlName="chiefAccountant" optionLabel="name.full" optionValue="_id"
+                  [placeholder]="'Головний бухгалтер'" [options]="users"></p-dropdown>
+              </span>
+
+              <span class="p-fluid p-field">
+                <p-dropdown appendTo="body" formControlName="cashier" optionLabel="name.full" optionValue="_id"
+                  [options]="users" [placeholder]="'Касир'"></p-dropdown>
+              </span>
             </span>
           </div>
-
-
-          <span class="fields__wrapper--box" formGroupName="signatures">
-            <p-divider>
-              <span class="p-badge">Підписи</span>
-            </p-divider>
-
-            <span class="p-fluid p-field">
-              <p-dropdown appendTo="body" formControlName="head" optionLabel="name.full" optionValue="_id"
-                [options]="users" [placeholder]="'Керівник'"></p-dropdown>
-            </span>
-
-            <span class="p-fluid p-field">
-              <p-dropdown appendTo="body" formControlName="chiefAccountant" optionLabel="name.full" optionValue="_id"
-                [placeholder]="'Головний бухгалтер'" [options]="users"></p-dropdown>
-            </span>
-
-            <span class="p-fluid p-field">
-              <p-dropdown appendTo="body" formControlName="cashier" optionLabel="name.full" optionValue="_id"
-                [options]="users" [placeholder]="'Касир'"></p-dropdown>
-            </span>
-          </span>
-        </div>
-        <!-- <span formGroupName="accounts">
+          <!-- <span formGroupName="accounts">
             <span class="p-fluid p-field">
                 <p-dropdown appendTo="body" formControlName="primary"
                     [placeholder]="'Основний банківський рахунок'"></p-dropdown>
@@ -69,247 +69,241 @@
                     [placeholder]="'Рахунок для соц. страхування'"></p-dropdown>
             </span>
         </span> -->
-      </ng-container>
+        </ng-container>
 
-      <ng-container *ngSwitchCase="1">
-        <div class="fields__wrapper">
-          <div class="fields__wrapper--box">
-            <span formGroupName="codes">
-              <span class="p-fluid p-field">
-                <input type="text" pInputText formControlName="territory" [placeholder]="'Територія'" />
+        <ng-container *ngSwitchCase="1">
+          <div class="fields__wrapper">
+            <div class="fields__wrapper--box">
+              <span formGroupName="codes">
+                <span class="p-fluid p-field">
+                  <input type="text" pInputText formControlName="territory" [placeholder]="'Територія'" />
+                </span>
+
+                <span class="p-fluid p-field">
+                  <input type="text" pInputText formControlName="ownership" [placeholder]="'Форма власності'" />
+                </span>
+
+                <span class="p-fluid p-field">
+                  <input type="text" pInputText formControlName="administration"
+                    [placeholder]="'Орган держ. управління'" />
+                </span>
+
+                <span class="p-fluid p-field">
+                  <input type="text" pInputText formControlName="branch" [placeholder]="'Галузь'" />
+                </span>
               </span>
 
-              <span class="p-fluid p-field">
-                <input type="text" pInputText formControlName="ownership" [placeholder]="'Форма власності'" />
+              <span formGroupName="economicActivity">
+                <span class="p-fluid p-field">
+                  <input type="text" pInputText formControlName="type" [placeholder]="'Вид економічної діяльності'" />
+                </span>
               </span>
 
-              <span class="p-fluid p-field">
-                <input type="text" pInputText formControlName="administration"
-                  [placeholder]="'Орган держ. управління'" />
+              <span formGroupName="occupationalRisk">
+                <span class="p-fluid p-field">
+                  <input type="text" pInputText formControlName="class" [placeholder]="'Клас проф. ризику'" />
+                </span>
               </span>
+            </div>
 
-              <span class="p-fluid p-field">
-                <input type="text" pInputText formControlName="branch" [placeholder]="'Галузь'" />
-              </span>
-            </span>
+            <div class="fields__wrapper--box">
+              <span formGroupName="codes">
+                <span class="p-fluid p-field">
+                  <p-treeSelect appendTo="body" formControlName="kopfg" [options]="companyOptions.kopfg"
+                    [placeholder]="'Код ОПФГ'"></p-treeSelect>
+                </span>
 
-            <span formGroupName="economicActivity">
-              <span class="p-fluid p-field">
-                <input type="text" pInputText formControlName="type" [placeholder]="'Вид економічної діяльності'" />
-              </span>
-            </span>
+                <span class="p-fluid p-field">
+                  <input type="number" pInputText formControlName="katottg" [placeholder]="'Код КАТОТТГ'" />
+                </span>
 
-            <span formGroupName="occupationalRisk">
-              <span class="p-fluid p-field">
-                <input type="text" pInputText formControlName="class" [placeholder]="'Клас проф. ризику'" />
-              </span>
-            </span>
-          </div>
+                <span class="p-fluid p-field">
+                  <p-dropdown appendTo="body" formControlName="koatyy" [placeholder]="'Код КОАТУУ'"></p-dropdown>
+                </span>
 
-          <div class="fields__wrapper--box">
-            <span formGroupName="codes">
-              <span class="p-fluid p-field">
-                <!-- <p-dropdown appendTo="body" [placeholder]="'Код ОПФГ'"></p-dropdown> -->
-                <p-treeSelect appendTo="body" formControlName="kopfg" [options]="registerFieldsOptions.kopfg"
-                  [placeholder]="'Код ОПФГ'"></p-treeSelect>
-              </span>
+                <span class="p-fluid p-field">
+                  <p-dropdown appendTo="body" formControlName="kfv" [placeholder]="'Код КФВ'"></p-dropdown>
+                </span>
 
-              <span class="p-fluid p-field">
-                <input type="number" pInputText formControlName="katottg" [placeholder]="'Код КАТОТТГ'" />
-              </span>
+                <span class="p-fluid p-field">
+                  <input type="text" pInputText formControlName="spody" [placeholder]="'Код по СПОДУ'" />
+                </span>
 
-              <span class="p-fluid p-field">
-                <p-dropdown appendTo="body" formControlName="koatyy" [placeholder]="'Код КОАТУУ'"></p-dropdown>
-              </span>
+                <span class="p-fluid p-field">
+                  <p-dropdown appendTo="body" formControlName="zkgng" [options]="companyOptions.zkgng"
+                    [placeholder]="'Код по ЗКГНГ'"></p-dropdown>
+                </span>
 
-              <span class="p-fluid p-field">
-                <p-dropdown appendTo="body" formControlName="kfv" [placeholder]="'Код КФВ'"></p-dropdown>
-              </span>
-
-              <span class="p-fluid p-field">
-                <input type="text" pInputText formControlName="spody" [placeholder]="'Код по СПОДУ'" />
-              </span>
-
-              <span class="p-fluid p-field">
-                <p-dropdown appendTo="body" formControlName="zkgng" [options]="registerFieldsOptions.zkgng"
-                  [placeholder]="'Код по ЗКГНГ'"></p-dropdown>
-              </span>
-
-              <span class="p-fluid p-field">
-                <p-treeSelect appendTo="body" formControlName="kved" [options]="registerFieldsOptions.kved"
-                  [placeholder]="'Код по КВЕД'"></p-treeSelect>
-                <!-- <p-dropdown appendTo="body" formControlName="kved"
+                <span class="p-fluid p-field">
+                  <p-treeSelect appendTo="body" formControlName="kved" [options]="companyOptions.kved"
+                    [placeholder]="'Код по КВЕД'"></p-treeSelect>
+                  <!-- <p-dropdown appendTo="body" formControlName="kved"
                             [placeholder]="'Код по КВЕД'"></p-dropdown> -->
+                </span>
               </span>
-            </span>
-          </div>
-        </div>
-
-        <p-divider>
-          <span class="p-badge">Реєстрація в податковій</span>
-        </p-divider>
-
-        <span formGroupName="codes" class="p-fluid p-field">
-          <p-dropdown appendTo="body" formControlName="tax" [placeholder]="'Податкова інспекція'"></p-dropdown>
-        </span>
-
-        <p-divider>
-          <span class="p-badge">Дані платника ПДВ</span>
-        </p-divider>
-
-        <div formGroupName="pdv" class="fields__wrapper">
-          <div class="fields__wrapper--box">
-            <span class="p-fluid p-field">
-              <input type="number" pInputText formControlName="ipn" [placeholder]="'ІПН'" />
-            </span>
+            </div>
           </div>
 
-          <div class="fields__wrapper--box">
-            <span class="p-fluid p-field">
-              <input type="number" pInputText formControlName="certificate" [placeholder]="'Номер свідоцтва'" />
-            </span>
-          </div>
-        </div>
-      </ng-container>
+          <p-divider>
+            <span class="p-badge">Реєстрація в податковій</span>
+          </p-divider>
 
-      <ng-container *ngSwitchCase="2">
-        <!-- <span class="p-fluid p-field">
+          <span formGroupName="codes" class="p-fluid p-field">
+            <p-dropdown appendTo="body" formControlName="tax" [placeholder]="'Податкова інспекція'"></p-dropdown>
+          </span>
+
+          <p-divider>
+            <span class="p-badge">Дані платника ПДВ</span>
+          </p-divider>
+
+          <div formGroupName="pdv" class="fields__wrapper">
+            <div class="fields__wrapper--box">
+              <span class="p-fluid p-field">
+                <input type="number" pInputText formControlName="ipn" [placeholder]="'ІПН'" />
+              </span>
+            </div>
+
+            <div class="fields__wrapper--box">
+              <span class="p-fluid p-field">
+                <input type="number" pInputText formControlName="certificate" [placeholder]="'Номер свідоцтва'" />
+              </span>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="2">
+          <!-- <span class="p-fluid p-field">
             <p-calendar appendTo="body" [placeholder]="'Період'"></p-calendar>
         </span> -->
 
-        <div class="fields__wrapper">
-          <div class="fields__wrapper--box">
-            <p-divider>
-              <span class="p-badge">Державна реєстрація</span>
-            </p-divider>
-
-            <span formGroupName="registration">
-              <span formGroupName="state">
-                <span class="p-fluid p-field">
-                  <input type="text" pInputText formControlName="number" [placeholder]="'Номер'" />
-                </span>
-
-                <span class="p-fluid p-field">
-                  <input type="text" pInputText formControlName="registeredBy" [placeholder]="'Ким зареєстрована'" />
-                </span>
-
-                <span class="p-fluid p-field">
-                  <p-calendar appendTo="body" formControlName="date" [placeholder]="'Дата'"></p-calendar>
-                </span>
-              </span>
-
+          <div class="fields__wrapper">
+            <div class="fields__wrapper--box">
               <p-divider>
-                <span class="p-badge">У пенсійному фонді</span>
+                <span class="p-badge">Державна реєстрація</span>
               </p-divider>
 
-              <span formGroupName="pension">
-                <span class="p-fluid p-field">
-                  <input pInputText type="number" formControlName="number" [placeholder]="'Номер'">
+              <span formGroupName="registration">
+                <span formGroupName="state">
+                  <span class="p-fluid p-field">
+                    <input type="text" pInputText formControlName="number" [placeholder]="'Номер'" />
+                  </span>
+
+                  <span class="p-fluid p-field">
+                    <input type="text" pInputText formControlName="registeredBy" [placeholder]="'Ким зареєстрована'" />
+                  </span>
+
+                  <span class="p-fluid p-field">
+                    <p-calendar appendTo="body" formControlName="date" [placeholder]="'Дата'"></p-calendar>
+                  </span>
                 </span>
 
-                <span class="p-fluid p-field">
-                  <input pInputText formControlName="codePfy" [placeholder]="'Код органу ПФУ'">
+                <p-divider>
+                  <span class="p-badge">У пенсійному фонді</span>
+                </p-divider>
+
+                <span formGroupName="pension">
+                  <span class="p-fluid p-field">
+                    <input pInputText type="number" formControlName="number" [placeholder]="'Номер'">
+                  </span>
+
+                  <span class="p-fluid p-field">
+                    <input pInputText formControlName="codePfy" [placeholder]="'Код органу ПФУ'">
+                  </span>
+                </span>
+
+                <span formGroupName="employment">
+                  <p-divider>
+                    <span class="p-badge">В службі зайнятості</span>
+                  </p-divider>
+
+                  <span class="p-fluid p-field">
+                    <input pInputText type="number" formControlName="number" [placeholder]="'Номер'">
+                  </span>
                 </span>
               </span>
+            </div>
 
-              <span formGroupName="employment">
+            <div formGroupName="registration" class="fields__wrapper--box">
+              <span formGroupName="fcc">
                 <p-divider>
-                  <span class="p-badge">В службі зайнятості</span>
+                  <span class="p-badge">У ФСС України</span>
                 </p-divider>
 
                 <span class="p-fluid p-field">
                   <input pInputText type="number" formControlName="number" [placeholder]="'Номер'">
                 </span>
-              </span>
-            </span>
-          </div>
 
-          <div formGroupName="registration" class="fields__wrapper--box">
-            <span formGroupName="fcc">
+                <p-divider>
+                  <span class="p-badge">У ФСС від нещасного випадку</span>
+                </p-divider>
+
+                <span class="p-fluid p-field">
+                  <input pInputText type="number" formControlName="accident" [placeholder]="'Номер'">
+                </span>
+
+                <p-divider>
+                  <span class="p-badge">У ФСС від тимчасової втрати працездатності</span>
+                </p-divider>
+
+                <span class="p-fluid p-field">
+                  <input pInputText type="number" formControlName="temporaryDisability" [placeholder]="'Номер'">
+                </span>
+              </span>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="3">
+          <div class="fields__wrapper">
+            <div class="fields__wrapper--box">
               <p-divider>
-                <span class="p-badge">У ФСС України</span>
+                <span class="p-badge">Адреси</span>
               </p-divider>
 
-              <span class="p-fluid p-field">
-                <input pInputText type="number" formControlName="number" [placeholder]="'Номер'">
-              </span>
+              <span formGroupName="address">
+                <span class="p-fluid p-field">
+                  <input type="text" pInputText formControlName="legal" [placeholder]="'Юридична адреса'" />
+                </span>
 
+                <span class="p-fluid p-field">
+                  <input type="text" pInputText formControlName="actual" [placeholder]="'Фактична адреса'" />
+                </span>
+
+                <span class="p-fluid p-field">
+                  <input type="text" pInputText formControlName="post" [placeholder]="'Поштова адреса'" />
+                </span>
+              </span>
+            </div>
+
+            <div class="fields__wrapper--box">
               <p-divider>
-                <span class="p-badge">У ФСС від нещасного випадку</span>
+                <span class="p-badge">Контактна інформація</span>
               </p-divider>
 
-              <span class="p-fluid p-field">
-                <input pInputText type="number" formControlName="accident" [placeholder]="'Номер'">
-              </span>
+              <span formGroupName="contacts">
+                <span class="p-fluid p-field">
+                  <input type="number" pInputText formControlName="phone" [placeholder]="'Контактний телефон'" />
+                </span>
 
-              <p-divider>
-                <span class="p-badge">У ФСС від тимчасової втрати працездатності</span>
-              </p-divider>
+                <span class="p-fluid p-field">
+                  <input type="text" pInputText formControlName="fax" [placeholder]="'Факс'" />
+                </span>
 
-              <span class="p-fluid p-field">
-                <input pInputText type="number" formControlName="temporaryDisability" [placeholder]="'Номер'">
+                <span class="p-fluid p-field">
+                  <input type="text" pInputText formControlName="email" [placeholder]="'Email'" />
+                </span>
               </span>
-            </span>
+            </div>
           </div>
-        </div>
-      </ng-container>
-
-      <ng-container *ngSwitchCase="3">
-        <div class="fields__wrapper">
-          <div class="fields__wrapper--box">
-            <p-divider>
-              <span class="p-badge">Адреси</span>
-            </p-divider>
-
-            <span formGroupName="address">
-              <span class="p-fluid p-field">
-                <input type="text" pInputText formControlName="legal" [placeholder]="'Юридична адреса'" />
-              </span>
-
-              <span class="p-fluid p-field">
-                <input type="text" pInputText formControlName="actual" [placeholder]="'Фактична адреса'" />
-              </span>
-
-              <span class="p-fluid p-field">
-                <input type="text" pInputText formControlName="post" [placeholder]="'Поштова адреса'" />
-              </span>
-            </span>
-          </div>
-
-          <div class="fields__wrapper--box">
-            <p-divider>
-              <span class="p-badge">Контактна інформація</span>
-            </p-divider>
-
-            <span formGroupName="contacts">
-              <span class="p-fluid p-field">
-                <input type="number" pInputText formControlName="phone" [placeholder]="'Контактний телефон'" />
-              </span>
-
-              <span class="p-fluid p-field">
-                <input type="text" pInputText formControlName="fax" [placeholder]="'Факс'" />
-              </span>
-
-              <span class="p-fluid p-field">
-                <input type="text" pInputText formControlName="email" [placeholder]="'Email'" />
-              </span>
-            </span>
-          </div>
-        </div>
+        </ng-container>
       </ng-container>
     </div>
 
   </p-tabPanel>
-  <!-- <p-tabPanel header="Облікова політика">
-    <p>
-      Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-      aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo
-      enim
-      ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
-      ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-    </p>
+  <p-tabPanel header="Розробка">
+    
   </p-tabPanel>
-  <p-tabPanel header="Підрозділи">
+  <!--<p-tabPanel header="Підрозділи">
     <p>
       At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque
       corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa

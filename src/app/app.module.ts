@@ -12,6 +12,7 @@ import { TreeSelectModule } from 'primeng/treeselect';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgAccountingModule } from 'ng-accounting';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { NgAccountingModule } from 'ng-accounting';
     TreeSelectModule,
     DividerModule,
     CalendarModule,
+    ReactiveFormsModule,
     InputTextModule,
     NgAccountingModule.forRoot({
       api: {
