@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { AccSystemService } from 'ng-accounting'
-import { COMPANY_FIELDS_OPTIONS } from 'node_modules/ng-accounting/assets/constants/company.constants'
+import { AccCompanyService, AccSystemService, COMPANY_FIELDS_OPTIONS } from 'ng-accounting'
 import { FormGroup, FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +10,14 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private readonly accSystemService: AccSystemService) { }
+  constructor(private readonly accSystemService: AccSystemService, private readonly accCompanyService: AccCompanyService) { }
 
   stepActiveIndex: number = 0
   users: any[] = []
   currentCompany!: any
 
-  companyOptions: any = {}
+  subscription: Subscription = new Subscription()
+  companyOptions: any = COMPANY_FIELDS_OPTIONS
   generalCompanyForm: FormGroup = new FormGroup({
     name: new FormGroup({
       short: new FormControl(null),
@@ -105,15 +106,71 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.users = this.accSystemService.users
     this.currentCompany = this.accSystemService.currentCompany
-    
-    const data = {
-      name: this.currentCompany.name,
-      ...this.currentCompany.settings.data
+
+    const { kopfg, kved } = this.currentCompany.settings.data.codes
+    const codes = {
+      ...this.currentCompany.settings.data.codes,
+      kopfg: this.findInTree(this.companyOptions.kopfg, kopfg),
+      kved: this.findInTree(this.companyOptions.kved, kved)
     }
 
-    console.log('COMPANY_FIELDS_OPTIONS', COMPANY_FIELDS_OPTIONS);
-    
-    
+    const data = {
+      ...this.currentCompany.settings.data,
+      name: this.currentCompany.name,
+      codes: codes
+    }
+
+    console.log(this.findInTree(this.companyOptions.kopfg, kopfg));
     this.generalCompanyForm.patchValue(data)
+  }
+
+  findInTree(nodes: any[] = [], data: string, parent?: any): any {
+    if (!Array.isArray(nodes)) {
+      nodes = [nodes]
+    }
+
+    for (const node of nodes) {
+      if (node.data == data) {
+        return node
+      } else if (Array.isArray(node.children)) {
+        let result = null
+        let parentNode = {
+          ...node,
+          expanded: true,
+          parent: parent
+        }
+
+        for (let i = 0; result == null && i < node.children.length; i++) {
+          result = this.findInTree(node.children[i], data, parentNode)
+        }
+
+        return {
+          ...result,
+          parent: parentNode
+        }
+      }
+
+      return null
+    }
+  }
+
+  updateSettings() {
+    const data = this.generalCompanyForm.value
+    const { kved, kopfg } = data.codes
+    data.codes = {
+      ...data.codes,
+      kved: kved.data,
+      kopfg: kopfg.data
+    }
+
+    this.currentCompany.name = data.name
+    delete data.name
+    this.currentCompany.settings.data = data
+
+    this.subscription.add(this.accCompanyService.update(this.currentCompany).subscribe({
+      next: () => {
+        this.subscription.add(this.accSystemService.getCurrentCompany().subscribe())
+      }
+    }))
   }
 }

@@ -1,6 +1,8 @@
 <p-tabView>
   <p-tabPanel header="Головне">
-    <p-steps [model]="mainSettingsModel" [readonly]="false" [(activeIndex)]="stepActiveIndex"></p-steps>
+    <p-button label="Зберегти" icon="pi pi-save" [disabled]="this.generalCompanyForm.untouched" (onClick)="updateSettings()"></p-button>
+    <p-steps styleClass="tab-steps" [model]="mainSettingsModel" [readonly]="false"
+      [(activeIndex)]="stepActiveIndex"></p-steps>
 
     <div class="steps__container" [ngSwitch]="stepActiveIndex">
       <ng-container [formGroup]="generalCompanyForm">
@@ -109,7 +111,7 @@
             <div class="fields__wrapper--box">
               <span formGroupName="codes">
                 <span class="p-fluid p-field">
-                  <p-treeSelect appendTo="body" formControlName="kopfg" [options]="companyOptions.kopfg"
+                  <p-treeSelect appendTo="body" [options]="companyOptions.kopfg" formControlName="kopfg"
                     [placeholder]="'Код ОПФГ'"></p-treeSelect>
                 </span>
 
@@ -135,7 +137,7 @@
                 </span>
 
                 <span class="p-fluid p-field">
-                  <p-treeSelect appendTo="body" formControlName="kved" [options]="companyOptions.kved"
+                  <p-treeSelect appendTo="body" [options]="companyOptions.kved" formControlName="kved"
                     [placeholder]="'Код по КВЕД'"></p-treeSelect>
                   <!-- <p-dropdown appendTo="body" formControlName="kved"
                             [placeholder]="'Код по КВЕД'"></p-dropdown> -->
@@ -149,7 +151,8 @@
           </p-divider>
 
           <span formGroupName="codes" class="p-fluid p-field">
-            <p-dropdown appendTo="body" formControlName="tax" [placeholder]="'Податкова інспекція'"></p-dropdown>
+            <p-dropdown appendTo="body" formControlName="tax" [editable]="true"
+              [placeholder]="'Податкова інспекція'"></p-dropdown>
           </span>
 
           <p-divider>
@@ -301,7 +304,7 @@
 
   </p-tabPanel>
   <p-tabPanel header="Розробка">
-    
+
   </p-tabPanel>
   <!--<p-tabPanel header="Підрозділи">
     <p>
